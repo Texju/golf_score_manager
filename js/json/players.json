@@ -1,0 +1,14 @@
+{
+	"players": [
+		{
+			"firstName": "Benjamin",
+			"lastName": "Morvan",
+			"level": "red"
+		},
+		{
+			"firstName": "Julien",
+			"lastName": "Couillard",
+			"level": "blue"
+		}
+	]
+}
