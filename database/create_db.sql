@@ -1,3 +1,5 @@
+
+DROP TABLE IF EXISTS players
 CREATE TABLE players(
    id INTEGER PRIMARY KEY AUTOINCREMENT, 
    name TEXT,
@@ -6,32 +8,7 @@ CREATE TABLE players(
    sex INTEGER -- 0 female 1 male 
 );
 
-CREATE TABLE game(
-	id INTEGER PRIMARY KEY AUTOINCREMENT, 
-	id_player INTEGER 
-	date TEXT, 
-	golf TEXT, 	
-	score_brut INTEGER, -- (total of ) for the game
-	score_net INTEGER, --(total of )  for the game
-	stableford INTEGER, -- (only for 18 holes)
-	FOREIGN KEY(id_player) REFERENCES players(id),
-	FOREIGN KEY(golf) REFERENCES golf(name)
-);
-
-CREATE TABLE hole(
-   id INTEGER PRIMARY KEY AUTOINCREMENT, 
-   id_player INTEGER, -- maybe useless can be find with game
-   golf TEXT, -- maybe useless can be find with game
-   hole_number INTEGER, -- in order to have handicap and par
-   bunker INTEGER, -- 0 yes 1 no
-   fairway INTEGER, -- 0 yes 1 no 2 green (green only for par 3)
-   nb_puts INTEGER, 
-   score_brute INTEGER, -- number of (coup joué ) for the hole
-   score_net INTEGER, -- number of (coup au dessus du par) for the hole
-   FOREIGN KEY(id_player) REFERENCES players(id)
-   FOREIGN KEY(golf) REFERENCES golf(name)
-);
-
+DROP TABLE IF EXISTS golf
 CREATE TABLE golf(
    name TEXT PRIMARY KEY, 
    slope INTEGER,
@@ -73,3 +50,32 @@ CREATE TABLE golf(
    par_hole_17 INTEGER,
    par_hole_18 INTEGER, 
 );
+
+DROP TABLE IF EXISTS game
+CREATE TABLE game(
+	id INTEGER PRIMARY KEY AUTOINCREMENT, 
+	id_player INTEGER 
+	date TEXT, 
+	golf TEXT, 	
+	score_brut INTEGER, -- (total of ) for the game
+	score_net INTEGER, --(total of )  for the game
+	stableford INTEGER, -- (only for 18 holes)
+	FOREIGN KEY(id_player) REFERENCES players(id),
+	FOREIGN KEY(golf) REFERENCES golf(name)
+);
+
+DROP TABLE IF EXISTS hole
+CREATE TABLE hole(
+   id INTEGER PRIMARY KEY AUTOINCREMENT, 
+   id_player INTEGER, -- maybe useless can be find with game
+   id_game TEXT, 
+   hole_number INTEGER, -- in order to have handicap and par
+   bunker INTEGER, -- 0 yes 1 no
+   fairway INTEGER, -- 0 yes 1 no 2 green (green only for par 3)
+   nb_puts INTEGER, 
+   score_brute INTEGER, -- number of (coup joué ) for the hole
+   score_net INTEGER, -- number of (coup au dessus du par) for the hole
+   FOREIGN KEY(id_player) REFERENCES players(id)
+   FOREIGN KEY(id_game) REFERENCES game(id)
+);
+
