@@ -1,5 +1,7 @@
+DROP DATABASE IF EXISTS golf_manager;
+CREATE DATABASE golf_manager;
 
-DROP TABLE IF EXISTS players
+DROP TABLE IF EXISTS players;
 CREATE TABLE players(
    id INTEGER PRIMARY KEY AUTOINCREMENT, 
    name TEXT,
@@ -8,7 +10,7 @@ CREATE TABLE players(
    sex INTEGER -- 0 female 1 male 
 );
 
-DROP TABLE IF EXISTS golf
+DROP TABLE IF EXISTS golf;
 CREATE TABLE golf(
    name TEXT PRIMARY KEY, 
    slope INTEGER,
@@ -51,7 +53,7 @@ CREATE TABLE golf(
    par_hole_18 INTEGER, 
 );
 
-DROP TABLE IF EXISTS game
+DROP TABLE IF EXISTS game;
 CREATE TABLE game(
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	id_player INTEGER 
@@ -64,7 +66,7 @@ CREATE TABLE game(
 	FOREIGN KEY(golf) REFERENCES golf(name)
 );
 
-DROP TABLE IF EXISTS hole
+DROP TABLE IF EXISTS hole;
 CREATE TABLE hole(
    id INTEGER PRIMARY KEY AUTOINCREMENT, 
    id_player INTEGER, -- maybe useless can be find with game
