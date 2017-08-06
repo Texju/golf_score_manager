@@ -1,6 +1,3 @@
-DROP DATABASE IF EXISTS golf_manager;
-CREATE DATABASE golf_manager;
-
 DROP TABLE IF EXISTS players;
 CREATE TABLE players(
    id INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -50,7 +47,7 @@ CREATE TABLE golf(
    par_hole_15 INTEGER,
    par_hole_16 INTEGER,
    par_hole_17 INTEGER,
-   par_hole_18 INTEGER, 
+   par_hole_18 INTEGER
 );
 
 DROP TABLE IF EXISTS game;
