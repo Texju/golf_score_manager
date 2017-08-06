@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sqlite3
+from sys import argv
 
 class DbGolfManager(object):
 	def __init__(self):
@@ -77,6 +78,7 @@ class DbGolfManager(object):
 
 # Main du programme
 if __name__ == "__main__":
+	
 	db = DbGolfManager()
 	db.execute_scripts_from_file("./create_db.sql")
 
