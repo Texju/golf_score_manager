@@ -57,7 +57,7 @@ DROP TABLE IF EXISTS game;
 CREATE TABLE game(
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	id_player INTEGER 
-	date TEXT, 
+	date_game TEXT, 
 	golf TEXT, 	
 	score_brut INTEGER, -- (total of ) for the game
 	score_net INTEGER, --(total of )  for the game
