@@ -64,12 +64,12 @@ function PlayerListViewModel() {
 	// ViewModel
     var self 				= this;
     self.players 			= ko.observableArray([]);
-    self.player {
+    self.player = {
     	firstName 	: ko.observable(),
     	lastName 	: ko.observable(),
     	sex 		: ko.observable(),
     	stableford 	: ko.observable()
-    }
+    };
 
     // Add player
     self.addPlayer = function() {
