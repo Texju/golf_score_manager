@@ -36,17 +36,17 @@ def close_database(exception):
 
 @app.route('/')
 def index():
-    return render_template('test/index.html')
+    return render_template('index.html')
 
 @app.route('/players')
-def todos():
+def players():
     db = get_db()
-    cur = db.execute('select firstname, lastname, stableford from todos order by id asc')
+    cur = db.execute('select firstname, lastname, stableford from database order by id asc')
     entries = [dict(firstname=row[0], lastname=row[1], stableford=row[1]) for row in cur.fetchall()]
     return jsonify(tasks=entries)
 
 @app.route('/players/new', methods=['POST'])
-def new_todo():
+def new_player():
     db = get_db()
     cur = db.execute('insert into database (firstname,lastname,stableford,sex) values (?, ?, ?, ?)',
                [request.json['firstname'], request.json['lastname'], request.json['stableford'], request.json['sex']])
@@ -58,7 +58,25 @@ def new_todo():
                     "sex": request.json['sex'],
                     "id": id})
 
+@app.route('/golfs')
+def golfs():
+    db = get_db()
+    cur = db.execute('select * from database order by id asc')
+    entries = [dict(firstname=row[0], lastname=row[1], stableford=row[1]) for row in cur.fetchall()]
+    return jsonify(tasks=entries)
 
+@app.route('/golfs/new', methods=['POST'])
+def new_golf():
+    db = get_db()
+    cur = db.execute('insert into database (firstname,lastname,stableford,sex) values (?, ?, ?, ?)',
+               [request.json['firstname'], request.json['lastname'], request.json['stableford'], request.json['sex']])
+    db.commit()
+    id = cur.lastrowid
+    return jsonify({"firstname": request.json['firstname'],
+                    "lastname": request.json['lastname'],
+                    "stableford": request.json['stableford'],
+                    "sex": request.json['sex'],
+                    "id": id})
 
 if __name__ == '__main__':
     if os.path.exists(DATABASE):
