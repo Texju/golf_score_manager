@@ -48,7 +48,6 @@ def players():
 @app.route('/players/new', methods=['POST'])
 def new_player():
     db = get_db()
-    print(request.args.get('players'))
     cur = db.execute('insert into players (firstName,lastName,stableford,sex) values (?, ?, ?, ?)',
                [request.json['firstName'], request.json['lastName'], request.json['stableford'], request.json['sex']])
     db.commit()
@@ -59,10 +58,10 @@ def new_player():
                     "sex": request.json['sex'],
                     "id": id})
 
-@app.route('/golfs')
-def golfs():
+@app.route('/golf_courses')
+def golf_courses():
     db = get_db()
-    cur = db.execute('select * from golfs order by name asc')
+    cur = db.execute('select * from golf_courses order by name asc')
     entries = [dict(
         name= row[0],
         slope = row[1],
@@ -103,12 +102,12 @@ def golfs():
         par_hole_16 = row[38],
         par_hole_17 = row[39],
         par_hole_18 = row[40]) for row in cur.fetchall()]
-    return jsonify(golfs=entries)
+    return jsonify(golf_courses=entries)
 
-@app.route('/golfs/new', methods=['POST'])
-def new_golf():
+@app.route('/golf_courses/new', methods=['POST'])
+def new_golf_course():
     db = get_db()
-    cur = db.execute('insert into golfs (name,slope,sss,handicap_hole_1,handicap_hole_2,handicap_hole_3,handicap_hole_4,handicap_hole_5,handicap_hole_6,handicap_hole_7,handicap_hole_8,handicap_hole_9,handicap_hole_10,handicap_hole_11,handicap_hole_12,handicap_hole_13,handicap_hole_14,handicap_hole_15,handicap_hole_16,handicap_hole_17,handicap_hole_18,par_hole_1,par_hole_2,par_hole_3,par_hole_4,par_hole_5,par_hole_6,par_hole_7,par_hole_8,par_hole_9,par_hole_10,par_hole_11,par_hole_12,par_hole_13,par_hole_14,par_hole_15,par_hole_16,par_hole_17,par_hole_18) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    cur = db.execute('insert into golf_courses (name,slope,sss,handicap_hole_1,handicap_hole_2,handicap_hole_3,handicap_hole_4,handicap_hole_5,handicap_hole_6,handicap_hole_7,handicap_hole_8,handicap_hole_9,handicap_hole_10,handicap_hole_11,handicap_hole_12,handicap_hole_13,handicap_hole_14,handicap_hole_15,handicap_hole_16,handicap_hole_17,handicap_hole_18,par_hole_1,par_hole_2,par_hole_3,par_hole_4,par_hole_5,par_hole_6,par_hole_7,par_hole_8,par_hole_9,par_hole_10,par_hole_11,par_hole_12,par_hole_13,par_hole_14,par_hole_15,par_hole_16,par_hole_17,par_hole_18) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                [request.json['name'],request.json['slope'],request.json['sss'],request.json['handicap_hole_1'],request.json['handicap_hole_2'],request.json['handicap_hole_3'],request.json['handicap_hole_4'],request.json['handicap_hole_5'],request.json['handicap_hole_6'],request.json['handicap_hole_7'],request.json['handicap_hole_8'],request.json['handicap_hole_9'],request.json['handicap_hole_10'],request.json['handicap_hole_11'],request.json['handicap_hole_12'],request.json['handicap_hole_13'],request.json['handicap_hole_14'],request.json['handicap_hole_15'],request.json['handicap_hole_16'],request.json['handicap_hole_17'],request.json['handicap_hole_18'],request.json['par_hole_1'],request.json['par_hole_2'],request.json['par_hole_3'],request.json['par_hole_4'],request.json['par_hole_5'],request.json['par_hole_6'],request.json['par_hole_7'],request.json['par_hole_8'],request.json['par_hole_9'],request.json['par_hole_10'],request.json['par_hole_11'],request.json['par_hole_12'],request.json['par_hole_13'],request.json['par_hole_14'],request.json['par_hole_15'],request.json['par_hole_16'],request.json['par_hole_17'],request.json['par_hole_18']])
     db.commit()
     # id = cur.lastrowid
@@ -153,6 +152,29 @@ def new_golf():
         "par_hole_17" : request.json['par_hole_17'],
         "par_hole_18" : request.json['par_hole_18']})
 
+@app.route('/games')
+def games():
+    db = get_db()
+    cur = db.execute('select players.firstName, players.lastName, games.date_game, games.golf, games.score_brut, games.score_net, games.stableford from game join players where players.id = game.id_player order by games.date_game asc')
+    entries = [dict(firstName=row[0], lastName=row[1], date_game=row[2], golf=row[3], score_brut=row[4], score_net=row[5], stableford=row[6]) for row in cur.fetchall()]
+    return jsonify(games=entries)
+
+@app.route('/games/new', methods=['POST'])
+def new_games():
+    db = get_db()
+    id = db.execute('select id from players where firstName = "'+request.json['firstName']+'" and lastName = "'+request.json['lastName']+'"')
+
+    cur = db.execute('insert into games (id_player, date_game,golf, score_brut, score_net, stableford) values (?, ?, ?, ?,?, ?)',
+               [id, request.json['date_game'], request.json['golf'], request.json['score_brut'], request.json['score_net'], request.json['stableford']])
+    db.commit()
+    id = cur.lastrowid
+    return jsonify({"id_player": request.json['id_player'],
+                    "date_game": request.json['date_game'],
+                    "golf": request.json['golf'],
+                    "score_brut": request.json['score_brut'],
+                    "score_net": request.json['score_net'],
+                    "stableford":request.json['stableford'],
+                    "id": id})
 
 if __name__ == '__main__':
     if os.path.exists(DATABASE):

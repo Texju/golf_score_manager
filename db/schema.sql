@@ -7,8 +7,8 @@ CREATE TABLE players(
    sex INTEGER -- 0 female 1 male 
 );
 
-DROP TABLE IF EXISTS golf;
-CREATE TABLE golfs(
+DROP TABLE IF EXISTS golf_courses;
+CREATE TABLE golf_courses(
    name TEXT PRIMARY KEY, 
    slope INTEGER,
    sss INTEGER, 
@@ -50,8 +50,8 @@ CREATE TABLE golfs(
    par_hole_18 INTEGER
 );
 
-DROP TABLE IF EXISTS game;
-CREATE TABLE game(
+DROP TABLE IF EXISTS games;
+CREATE TABLE games(
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	id_player INTEGER 
 	date_game TEXT, 
@@ -64,7 +64,7 @@ CREATE TABLE game(
 );
 
 DROP TABLE IF EXISTS hole;
-CREATE TABLE hole(
+CREATE TABLE holes(
    id INTEGER PRIMARY KEY AUTOINCREMENT, 
    id_player INTEGER, -- maybe useless can be find with game
    id_game TEXT, 
