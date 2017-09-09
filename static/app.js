@@ -1,13 +1,13 @@
 // ********** EXAMPLE ********** //
 
 function Task(data) {
-    this.id = ko.observable(data.id);
+    /*this.id = ko.observable(data.id);
     this.title = ko.observable(data.title);
-    this.description = ko.observable(data.description);
+    this.description = ko.observable(data.description);*/
 }
 
 function TaskListViewModel() {
-    var self = this;
+    /*var self = this;
     self.tasks = ko.observableArray([]);
     self.newTaskTitle = ko.observable();
     self.newTaskDesc = ko.observable();
@@ -43,10 +43,10 @@ function TaskListViewModel() {
 		return console.log("Failed");
 	    }
 	});
-    };
+    };*/
 }
 
-ko.applyBindings(new TaskListViewModel());
+// ko.applyBindings(new TaskListViewModel());
 
 // ********** MODEL ********** //
 
@@ -64,26 +64,38 @@ function PlayerListViewModel() {
 	// ViewModel
     var self 				= this;
     self.players 			= ko.observableArray([]);
-    self.player = {
+    /*self.newPlayer = {
     	firstName 	: ko.observable(),
     	lastName 	: ko.observable(),
     	sex 		: ko.observable(),
     	stableford 	: ko.observable()
-    };
+    };*/
+    self.newPlayerFirstName = ko.observable();
+    self.newPlayerLastName = ko.observable();
+    self.newPlayerSex = ko.observable();
+    self.newPlayerStableford = ko.observable();
 
     // Add player
     self.addPlayer = function() {
+		console.log("add caca");
     	// Ajax request
 		self.save();
-		// Player creation
-		self.player.firstName("");
-		self.player.lastName("");
-		self.player.sex("");
-		self.player.stableford("");
+
+		/*self.newPlayer.firstName("");
+		self.newPlayer.lastName("");
+		self.newPlayer.sex("");
+		self.newPlayer.stableford("");*/
+
+		self.newPlayerFirstName("");
+	    self.newPlayerLastName("");
+	    self.newPlayerSex("");
+	    self.newPlayerStableford("");
+
+
     };
 
     // Get players
-    $.getJSON('/players', function(players) {
+    $.getJSON('/players', function(playerListModel) {
 		var t = $.map(playerListModel.players, function(item) {
 		    return new Player(item);
 		});
@@ -95,14 +107,20 @@ function PlayerListViewModel() {
 		    url			: '/players/new',
 		    contentType	: 'application/json',
 		    type 		: 'POST',
-		    data 		: JSON.stringify({
-				'player': self.player
-		    }),
+		    /*data 		: JSON.stringify({
+				'player': self.newPlayerFirstName()
+		    }),*/
+			data : JSON.stringify({
+				'firstName': self.newPlayerFirstName(),
+				'lastName': self.newPlayerLastName(),
+				'sex': self.newPlayerSex(),
+				'stableford': self.newPlayerStableford()
+			}),
 		    success: function(data) {
 				console.log("Pushing to tasks array");
 				self.players.push(new Player({
-					firstName	: data.firstName,
-					lastName	: data.firstName,
+					firstname	: data.firstName,
+					lastname	: data.lastName,
 					sex			: data.sex,
 					stableford	: data.stableford
 				}));
@@ -113,6 +131,7 @@ function PlayerListViewModel() {
 		    }
 		});
     };
+
 }
 
 // Apply bindings
