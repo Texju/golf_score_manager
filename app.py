@@ -53,7 +53,7 @@ def new_player():
                [request.json['firstName'], request.json['lastName'], request.json['stableford'], request.json['sex']])
     db.commit()
     id = cur.lastrowid
-    return jsonify({"firstName": request.json['player.firstName'],
+    return jsonify({"firstName": request.json['firstName'],
                     "lastName": request.json['lastName'],
                     "stableford": request.json['stableford'],
                     "sex": request.json['sex'],
