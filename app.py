@@ -48,11 +48,12 @@ def players():
 @app.route('/players/new', methods=['POST'])
 def new_player():
     db = get_db()
+    print(request.args.get('players'))
     cur = db.execute('insert into players (firstname,lastname,stableford,sex) values (?, ?, ?, ?)',
                [request.json['firstname'], request.json['lastname'], request.json['stableford'], request.json['sex']])
     db.commit()
     id = cur.lastrowid
-    return jsonify({"firstname": request.json['firstname'],
+    return jsonify({"firstname": request.json['player.firstname'],
                     "lastname": request.json['lastname'],
                     "stableford": request.json['stableford'],
                     "sex": request.json['sex'],
