@@ -3,7 +3,7 @@ from sqlite3 import dbapi2 as sqlite3
 import os.path
 
 
-DATABASE = './db/todos.db'
+DATABASE = './db/database.db'
 DEBUG = True
 SECRET_KEY = 'some super secret development key'
 
@@ -38,26 +38,30 @@ def close_database(exception):
 def index():
     return render_template('test/index.html')
 
-@app.route('/tasks')
+@app.route('/players')
 def todos():
     db = get_db()
-    cur = db.execute('select title, description from todos order by id asc')
-    entries = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
+    cur = db.execute('select firstname, lastname, stableford from todos order by id asc')
+    entries = [dict(firstname=row[0], lastname=row[1], stableford=row[1]) for row in cur.fetchall()]
     return jsonify(tasks=entries)
 
-@app.route('/tasks/new', methods=['POST'])
+@app.route('/players/new', methods=['POST'])
 def new_todo():
     db = get_db()
-    cur = db.execute('insert into todos (title, description) values (?, ?)',
-               [request.json['title'], request.json['description']])
+    cur = db.execute('insert into database (firstname,lastname,stableford,sex) values (?, ?, ?, ?)',
+               [request.json['firstname'], request.json['lastname'], request.json['stableford'], request.json['sex']])
     db.commit()
     id = cur.lastrowid
-    return jsonify({"title": request.json['title'],
-                    "description": request.json['description'],
+    return jsonify({"firstname": request.json['firstname'],
+                    "lastname": request.json['lastname'],
+                    "stableford": request.json['stableford'],
+                    "sex": request.json['sex'],
                     "id": id})
 
+
+
 if __name__ == '__main__':
-    if os.path.exists('./db/todos.db'):
+    if os.path.exists(DATABASE):
         print("We found a database")        
     else : 
         print("First time ? We create database")
