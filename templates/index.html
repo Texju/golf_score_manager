@@ -1,1 +1,22 @@
-<html></html>
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+
+		<!-- ********** LOGIN ********** -->
+
+		<ul data-bind="foreach: player">
+			<li>
+				<span data-bind="text: player.firstname"></span>
+				<span data-bind="text: player.lastname"></span>
+			</li>
+		</ul>
+
+		<!-- ********** SCRIPTS ********** -->
+
+	    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	    <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js"></script>
+	    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+	</body>
+</html>
