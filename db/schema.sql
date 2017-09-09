@@ -8,7 +8,7 @@ CREATE TABLE players(
 );
 
 DROP TABLE IF EXISTS golf;
-CREATE TABLE golf(
+CREATE TABLE golfs(
    name TEXT PRIMARY KEY, 
    slope INTEGER,
    sss INTEGER, 
