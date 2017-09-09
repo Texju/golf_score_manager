@@ -5,12 +5,22 @@
 
 		<!-- ********** LOGIN ********** -->
 
-		<ul data-bind="foreach: player">
+		<ul data-bind="foreach: players, visible: players().length > 0">
 			<li>
 				<span data-bind="text: player.firstname"></span>
 				<span data-bind="text: player.lastname"></span>
 			</li>
 		</ul>
+
+		<!-- ********** ADD PLAYER ********** -->
+
+		<form data-bind="submit: addPlayer">
+			First name <input type="text" data-bind="value: newPlayer.firstName">
+			Last name <input type="text" data-bind="value: newPlayer.lastName">
+			Sex <input type="text" data-bind="value: newPlayer.sex">
+			Stableford <input type="text" data-bind="value: newPlayer.stableford">
+		</form>
+		<button type="submit">Add</button>
 
 		<!-- ********** SCRIPTS ********** -->
 
