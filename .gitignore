@@ -1,2 +1,3 @@
 db/database.db
 *.vscode
+*.DS_Store
