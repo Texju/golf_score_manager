@@ -7,12 +7,18 @@
 
 		<ul data-bind="foreach: players, visible: players().length > 0">
 			<li>
-				<span data-bind="text: firstname"></span>
-				<span data-bind="text: lastname"></span>
+				<a href="golfCourses.html">
+					<button on-click="alert('todo login feature');">
+						<span data-bind="text: firstName"></span>
+						<span data-bind="text: lastName"></span>
+					</button>
+				</a>
 			</li>
 		</ul>
 
 		<!-- ********** ADD PLAYER ********** -->
+
+		<h2>Add a player</h2>
 
 		<form data-bind="submit: addPlayer">
 			<!-- First name <input data-bind="value: newPlayer.firstName()">

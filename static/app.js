@@ -77,7 +77,6 @@ function PlayerListViewModel() {
 
     // Add player
     self.addPlayer = function() {
-		console.log("add caca");
     	// Ajax request
 		self.save();
 
@@ -90,8 +89,6 @@ function PlayerListViewModel() {
 	    self.newPlayerLastName("");
 	    self.newPlayerSex("");
 	    self.newPlayerStableford("");
-
-
     };
 
     // Get players
@@ -117,7 +114,7 @@ function PlayerListViewModel() {
 				'stableford': self.newPlayerStableford()
 			}),
 		    success: function(data) {
-				console.log("Pushing to tasks array");
+				console.log("Pushing to players array");
 				self.players.push(new Player({
 					firstname	: data.firstName,
 					lastname	: data.lastName,
@@ -131,8 +128,73 @@ function PlayerListViewModel() {
 		    }
 		});
     };
-
 }
+
+function GolfCourseListViewModel() {
+
+	// ViewModel
+    var self 			= this;
+    self.golfCourses 	= ko.observableArray([]);
+
+    self.newGolfCourseName 	= ko.observable();
+    self.newGolfCourseSlope = ko.observable();
+    self.newGolfCourseSss 	= ko.observable();
+
+    self.golfCourseHandicapHoles = ko.observableArray([]);
+
+    
+
+    self.newGolfCourseHandicapHole1 = ko.observable();
+    self.newGolfCourseHandicapHole2 = ko.observable();
+    self.newGolfCourseHandicapHole3 = ko.observable();
+    self.newGolfCourseHandicapHole4 = ko.observable();
+    self.newGolfCourseHandicapHole5 = ko.observable();
+    self.newGolfCourseHandicapHole6 = ko.observable();
+    self.newGolfCourseHandicapHole7 = ko.observable();
+    self.newGolfCourseHandicapHole8 = ko.observable();
+    self.newGolfCourseHandicapHole9 = ko.observable();
+    self.newGolfCourseHandicapHole10 = ko.observable();
+    self.newGolfCourseHandicapHole11 = ko.observable();
+    self.newGolfCourseHandicapHole12 = ko.observable();
+    self.newGolfCourseHandicapHole13 = ko.observable();
+    self.newGolfCourseHandicapHole14 = ko.observable();
+    self.newGolfCourseHandicapHole15 = ko.observable();
+    self.newGolfCourseHandicapHole16 = ko.observable();
+    self.newGolfCourseHandicapHole17 = ko.observable();
+    self.newGolfCourseHandicapHole18 = ko.observable();
+
+    var t = [
+    	self.newGolfCourseHandicapHole1,
+    	self.newGolfCourseHandicapHole2,
+    	self.newGolfCourseHandicapHole3,
+    	self.newGolfCourseHandicapHole4,
+    	self.newGolfCourseHandicapHole5,
+    	self.newGolfCourseHandicapHole6,
+    	self.newGolfCourseHandicapHole7,
+    	self.newGolfCourseHandicapHole8,
+    	self.newGolfCourseHandicapHole9,
+    	self.newGolfCourseHandicapHole10,
+    	self.newGolfCourseHandicapHole11,
+    	self.newGolfCourseHandicapHole12,
+    	self.newGolfCourseHandicapHole13,
+    	self.newGolfCourseHandicapHole14,
+    	self.newGolfCourseHandicapHole15,
+    	self.newGolfCourseHandicapHole16,
+    	self.newGolfCourseHandicapHole17,
+    	self.newGolfCourseHandicapHole18
+    ];
+    self.golfCourseHandicapHoles(t);
+
+    self.generateHandicaps = function() {
+    	var select = document.createElement("SELECT");
+    	for (var i = 1; i < 19; i++) {
+    		var option = document.createElement("OPTION");
+    		option.value 	= i;
+    		option.text 	= i;
+    		option.selected = (i == 1);
+    		select.appendChild(option);
+    	};
+    }
 
 // Apply bindings
 ko.applyBindings(new PlayerListViewModel());

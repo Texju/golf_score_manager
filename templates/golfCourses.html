@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+
+		<!-- ********** LOGIN ********** -->
+
+		<!-- <ul data-bind="foreach: players, visible: players().length > 0">
+			<li>
+				<button>
+					<span data-bind="text: firstName"></span>
+					<span data-bind="text: lastName"></span>
+				</button>
+			</li>
+		</ul> -->
+
+		<!-- ********** ADD GOLF ********** -->
+
+		<h2>Add a golf course</h2>
+
+		Name <input data-bind="value: newGolfCourseName">
+		Slope <input data-bind="value: newGolfCourseSlope">
+		Sss <input data-bind="value: newGolfCourseSss">
+
+		<div data-bind="foreach: golfCourseHandicapHoles">
+			Handicap hole <span data-bind="text: holeNumber"></span>			
+		</div>
+
+		<button type="submit">Add</button>
+
+		<!-- ********** SCRIPTS ********** -->
+
+	    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	    <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js"></script>
+	    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+	</body>
+</html>
