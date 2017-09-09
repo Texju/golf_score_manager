@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS players;
 CREATE TABLE players(
    id INTEGER PRIMARY KEY AUTOINCREMENT, 
-   firstname TEXT,
-   lastname TEXT,
+   firstName TEXT,
+   lastName TEXT,
    stableford INTEGER, --index in french
    sex INTEGER -- 0 female 1 male 
 );

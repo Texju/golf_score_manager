@@ -41,20 +41,20 @@ def index():
 @app.route('/players')
 def players():
     db = get_db()
-    cur = db.execute('select firstname, lastname, stableford from players order by id asc')
-    entries = [dict(firstname=row[0], lastname=row[1], stableford=row[2]) for row in cur.fetchall()]
+    cur = db.execute('select firstName, lastName, stableford from players order by id asc')
+    entries = [dict(firstName=row[0], lastName=row[1], stableford=row[2]) for row in cur.fetchall()]
     return jsonify(players=entries)
 
 @app.route('/players/new', methods=['POST'])
 def new_player():
     db = get_db()
     print(request.args.get('players'))
-    cur = db.execute('insert into players (firstname,lastname,stableford,sex) values (?, ?, ?, ?)',
-               [request.json['firstname'], request.json['lastname'], request.json['stableford'], request.json['sex']])
+    cur = db.execute('insert into players (firstName,lastName,stableford,sex) values (?, ?, ?, ?)',
+               [request.json['firstName'], request.json['lastName'], request.json['stableford'], request.json['sex']])
     db.commit()
     id = cur.lastrowid
-    return jsonify({"firstname": request.json['player.firstname'],
-                    "lastname": request.json['lastname'],
+    return jsonify({"firstName": request.json['player.firstName'],
+                    "lastName": request.json['lastName'],
                     "stableford": request.json['stableford'],
                     "sex": request.json['sex'],
                     "id": id})
@@ -161,4 +161,3 @@ if __name__ == '__main__':
         print("First time ? We create database")
         init_db()
     app.run()
-
