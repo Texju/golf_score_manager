@@ -41,9 +41,14 @@ def index():
 @app.route('/players')
 def players():
     db = get_db()
-    cur = db.execute('select firstName, lastName, stableford from players order by id asc')
-    entries = [dict(firstName=row[0], lastName=row[1], stableford=row[2]) for row in cur.fetchall()]
-    return jsonify(players=entries)
+    cur = db.execute('select * from players order by id asc')
+    entries = [dict(id=row[0], firstName=row[1], lastName=row[2], stableford=row[3]) for row in cur.fetchall()]
+    if request.args['type'] == 'json':
+        return jsonify(players=entries)
+    else:
+        ## TODO : Template ?
+        return render_template('golf_courses.html', players=entries))
+    
 
 @app.route('/players/new', methods=['POST'])
 def new_player():
@@ -64,22 +69,23 @@ def golf_courses():
     cur = db.execute('select * from golf_courses order by name asc')
     entries = [dict(
         name= row[0],
-        slope = row[1],
-        sss = row[2],
-        handicap_hole_1 = row[3],
-        handicap_hole_2 = row[4],
-        handicap_hole_3 = row[5],
-        handicap_hole_4 = row[6],
-        handicap_hole_5 = row[7],
-        handicap_hole_6 = row[8],
-        handicap_hole_7 = row[9],
-        handicap_hole_8 = row[10],
-        handicap_hole_9 = row[11],
-        handicap_hole_10 = row[12],
-        handicap_hole_11 = row[13],
-        handicap_hole_12 = row[14],
-        handicap_hole_13 = row[15],
-        handicap_hole_14 = row[16],
+        dpt = row[1],
+        slope = row[2],
+        sss = row[3],
+        handicap_hole_1 = row[4],
+        handicap_hole_2 = row[5],
+        handicap_hole_3 = row[6],
+        handicap_hole_4 = row[7],
+        handicap_hole_5 = row[8],
+        handicap_hole_6 = row[9],
+        handicap_hole_7 = row[10],
+        handicap_hole_8 = row[11],
+        handicap_hole_9 = row[12],
+        handicap_hole_10 = row[13],
+        handicap_hole_11 = row[14],
+        handicap_hole_12 = row[15],
+        handicap_hole_13 = row[16],
+        handicap_hole_14 = row[17],
         handicap_hole_15 = row[18],
         handicap_hole_16 = row[19],
         handicap_hole_17 = row[20],
@@ -102,17 +108,23 @@ def golf_courses():
         par_hole_16 = row[38],
         par_hole_17 = row[39],
         par_hole_18 = row[40]) for row in cur.fetchall()]
-    return jsonify(golf_courses=entries)
+    if request.args['type'] == 'json':
+        return jsonify(golf_courses=entries)
+    else:
+        return render_template('golf_courses.html', golf_courses=entries))
+    
+    
 
 @app.route('/golf_courses/new', methods=['POST'])
 def new_golf_course():
     db = get_db()
-    cur = db.execute('insert into golf_courses (name,slope,sss,handicap_hole_1,handicap_hole_2,handicap_hole_3,handicap_hole_4,handicap_hole_5,handicap_hole_6,handicap_hole_7,handicap_hole_8,handicap_hole_9,handicap_hole_10,handicap_hole_11,handicap_hole_12,handicap_hole_13,handicap_hole_14,handicap_hole_15,handicap_hole_16,handicap_hole_17,handicap_hole_18,par_hole_1,par_hole_2,par_hole_3,par_hole_4,par_hole_5,par_hole_6,par_hole_7,par_hole_8,par_hole_9,par_hole_10,par_hole_11,par_hole_12,par_hole_13,par_hole_14,par_hole_15,par_hole_16,par_hole_17,par_hole_18) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-               [request.json['name'],request.json['slope'],request.json['sss'],request.json['handicap_hole_1'],request.json['handicap_hole_2'],request.json['handicap_hole_3'],request.json['handicap_hole_4'],request.json['handicap_hole_5'],request.json['handicap_hole_6'],request.json['handicap_hole_7'],request.json['handicap_hole_8'],request.json['handicap_hole_9'],request.json['handicap_hole_10'],request.json['handicap_hole_11'],request.json['handicap_hole_12'],request.json['handicap_hole_13'],request.json['handicap_hole_14'],request.json['handicap_hole_15'],request.json['handicap_hole_16'],request.json['handicap_hole_17'],request.json['handicap_hole_18'],request.json['par_hole_1'],request.json['par_hole_2'],request.json['par_hole_3'],request.json['par_hole_4'],request.json['par_hole_5'],request.json['par_hole_6'],request.json['par_hole_7'],request.json['par_hole_8'],request.json['par_hole_9'],request.json['par_hole_10'],request.json['par_hole_11'],request.json['par_hole_12'],request.json['par_hole_13'],request.json['par_hole_14'],request.json['par_hole_15'],request.json['par_hole_16'],request.json['par_hole_17'],request.json['par_hole_18']])
+    cur = db.execute('insert into golf_courses (name,dpt,slope,sss,handicap_hole_1,handicap_hole_2,handicap_hole_3,handicap_hole_4,handicap_hole_5,handicap_hole_6,handicap_hole_7,handicap_hole_8,handicap_hole_9,handicap_hole_10,handicap_hole_11,handicap_hole_12,handicap_hole_13,handicap_hole_14,handicap_hole_15,handicap_hole_16,handicap_hole_17,handicap_hole_18,par_hole_1,par_hole_2,par_hole_3,par_hole_4,par_hole_5,par_hole_6,par_hole_7,par_hole_8,par_hole_9,par_hole_10,par_hole_11,par_hole_12,par_hole_13,par_hole_14,par_hole_15,par_hole_16,par_hole_17,par_hole_18) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+               [request.json['name'],request.json['dpt'],request.json['slope'],request.json['sss'],request.json['handicap_hole_1'],request.json['handicap_hole_2'],request.json['handicap_hole_3'],request.json['handicap_hole_4'],request.json['handicap_hole_5'],request.json['handicap_hole_6'],request.json['handicap_hole_7'],request.json['handicap_hole_8'],request.json['handicap_hole_9'],request.json['handicap_hole_10'],request.json['handicap_hole_11'],request.json['handicap_hole_12'],request.json['handicap_hole_13'],request.json['handicap_hole_14'],request.json['handicap_hole_15'],request.json['handicap_hole_16'],request.json['handicap_hole_17'],request.json['handicap_hole_18'],request.json['par_hole_1'],request.json['par_hole_2'],request.json['par_hole_3'],request.json['par_hole_4'],request.json['par_hole_5'],request.json['par_hole_6'],request.json['par_hole_7'],request.json['par_hole_8'],request.json['par_hole_9'],request.json['par_hole_10'],request.json['par_hole_11'],request.json['par_hole_12'],request.json['par_hole_13'],request.json['par_hole_14'],request.json['par_hole_15'],request.json['par_hole_16'],request.json['par_hole_17'],request.json['par_hole_18']])
     db.commit()
     # id = cur.lastrowid
     return jsonify({
         "name" : request.json['name'],
+        "dpt" : request.json['dpt'],
         "slope" : request.json['slope'],
         "sss" : request.json['sss'],
         "handicap_hole_1" : request.json['handicap_hole_1'],
@@ -157,13 +169,16 @@ def games():
     db = get_db()
     cur = db.execute('select players.firstName, players.lastName, games.date_game, games.golf, games.score_brut, games.score_net, games.stableford from game join players where players.id = game.id_player order by games.date_game asc')
     entries = [dict(firstName=row[0], lastName=row[1], date_game=row[2], golf=row[3], score_brut=row[4], score_net=row[5], stableford=row[6]) for row in cur.fetchall()]
-    return jsonify(games=entries)
+    if request.args['type'] == 'json':
+        return jsonify(games=entries)
+    else:
+        ## TODO : Template ?
+        return render_template('golf_courses.html', games=entries))
+    
 
 @app.route('/games/new', methods=['POST'])
 def new_games():
     db = get_db()
-    id = db.execute('select id from players where firstName = "'+request.json['firstName']+'" and lastName = "'+request.json['lastName']+'"')
-
     cur = db.execute('insert into games (id_player, date_game,golf, score_brut, score_net, stableford) values (?, ?, ?, ?,?, ?)',
                [id, request.json['date_game'], request.json['golf'], request.json['score_brut'], request.json['score_net'], request.json['stableford']])
     db.commit()
@@ -175,6 +190,8 @@ def new_games():
                     "score_net": request.json['score_net'],
                     "stableford":request.json['stableford'],
                     "id": id})
+
+
 
 if __name__ == '__main__':
     if os.path.exists(DATABASE):

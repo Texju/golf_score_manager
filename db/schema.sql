@@ -10,6 +10,7 @@ CREATE TABLE players(
 DROP TABLE IF EXISTS golf_courses;
 CREATE TABLE golf_courses(
    name TEXT PRIMARY KEY, 
+   dpt INTERGER, 
    slope INTEGER,
    sss INTEGER, 
    handicap_hole_1 INTEGER,
@@ -71,7 +72,7 @@ CREATE TABLE holes(
    hole_number INTEGER, -- in order to have handicap and par
    bunker INTEGER, -- 0 yes 1 no
    fairway INTEGER, -- 0 yes 1 no 2 green (green only for par 3)
-   nb_puts INTEGER, 
+   puts INTEGER, -- 0 putting in regulation 1 No putting in regulation 
    score_brute INTEGER, -- number of (coup joué ) for the hole
    score_net INTEGER, -- number of (coup au dessus du par) for the hole
    FOREIGN KEY(id_player) REFERENCES players(id)
